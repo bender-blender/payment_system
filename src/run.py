@@ -1,22 +1,20 @@
-from pay_systems import (
-    OsadchiySystem,
-    PayPal
-    )
-
-from adapter import AdapterPal
-
+from russian_system import (
+    Mir,
+    VTB
+)
+from american_system import MasterCard
+from adapter import Adapter
 
 
 def client_code():
-    owner_one = OsadchiySystem("Осадчий Максим Сергеевич",100000000,"55564432")
-    print(owner_one)
-    
-    owner_one.pay(500,"5565432")
-    print()
-    onwer_two = PayPal("Осадчий Сергей Сергеевич",500,"5553456")
-    print(onwer_two)
-    
-    adapter = AdapterPal(onwer_two)
-    adapter.pay(20,"5552468")
-    adapter.pay(300,"543223")
+    onwer_1 = Mir(500)
+    onwer_2 = MasterCard(600)
+    onwer_3 = VTB(1000)
+
+    adapter = Adapter(onwer_1,onwer_2)
+    adapter.translation_into_russian(300)
+
+    adapter2 = Adapter(onwer_3,onwer_2)
+    adapter2.translation_into_american(200)
+
 client_code()

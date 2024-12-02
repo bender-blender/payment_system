@@ -1,18 +1,31 @@
-from interface import IPaymentSystem
-from pay_systems import PayPal
+from interface import (
+    AmericanSystem,
+    RussianSystem
+)
 
 
-class AdapterPal(IPaymentSystem):
-    """Адаптер для PayPal
-
-    Args:
-        IPaymentSystem (_type_): _description_
+class Adapter:
+    """Адапетр
     """
-    def __init__(self,system:PayPal):
-        self.system = system
 
-    def pay(self, amount: int, number: str):
-        if number.startswith("555"):
-            self.system.pay_pal(amount,number)
-        else:
-            print("Не работаем")
+    def __init__(self,russian:RussianSystem,american:AmericanSystem):
+        self.ru = russian
+        self.us = american
+    
+    def translation_into_russian(self,value:int):
+        """Перевод через адаптер на русскую систему
+        """
+        self.ru.code = "us"
+        self.us.shifting(self.ru,value)
+        self.ru.code = "ru"
+    
+    def translation_into_american(self,value:int):
+        """Перевод через адаптер на американскую систему
+        """
+        self.us.code = "ru"
+        self.ru.translation(self.us,value)
+        self.us.code = "us"
+
+
+        
+
